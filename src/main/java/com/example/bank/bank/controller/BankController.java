@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-@RequestMapping("/accounts")
+@RequestMapping("/home")
 public class BankController {
 
     static double balance;
@@ -32,8 +32,12 @@ public class BankController {
     public BankController(AccountsService accountsService) {
         this.accountsService = accountsService;
     }
-    
 
+    @GetMapping("/")
+    public String showHomePage(){
+        return "accounts/home";
+    }
+    
     @GetMapping("/list")
     public String accountList(Model model) {
         List<accounts> accounts = accountsService.findAll();
