@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.bank.bank.entity.Authorities;
 import com.example.bank.bank.entity.Users;
 import com.example.bank.bank.entity.accounts;
 import com.example.bank.bank.model.Withdraw;
 import com.example.bank.bank.service.AccountsService;
+import com.example.bank.bank.service.AuthoritiesService;
 import com.example.bank.bank.service.UsersService;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,10 +34,12 @@ public class BankController {
 
     private AccountsService accountsService;
     private UsersService usersService;
+    private AuthoritiesService authoritiesService;
 
-    public BankController(AccountsService accountsService, UsersService theusersService) {
+    public BankController(AccountsService accountsService, UsersService theusersService, AuthoritiesService theauthoritiesService) {
         this.accountsService = accountsService;
         this.usersService = theusersService;
+        this.authoritiesService = theauthoritiesService;
     }
 
     @GetMapping("/")
@@ -92,7 +96,11 @@ public class BankController {
         user.setUsername(account.getFirstName());
         user.setPassword("{noop}"+account.getFirstName());
         user.setEnabled(1);
+        Authorities authorities = new Authorities();
+        authorities.setUsername(account.getFirstName());
+        authorities.setAuthority("ROLE_USER");
         usersService.save(user);
+        authoritiesService.save(authorities);
         accountsService.save(account);
         return "redirect:/list";
     }

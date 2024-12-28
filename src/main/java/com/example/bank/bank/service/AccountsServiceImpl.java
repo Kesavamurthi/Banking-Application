@@ -6,7 +6,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.bank.bank.DAO.AccountDAO;
+import com.example.bank.bank.DAO.AuthoritiesDAO;
 import com.example.bank.bank.DAO.UsersDAO;
+import com.example.bank.bank.entity.Authorities;
 import com.example.bank.bank.entity.Users;
 import com.example.bank.bank.entity.accounts;
 
@@ -25,12 +27,16 @@ public class AccountsServiceImpl implements AccountsService{
     private UsersService usersService;
     private AccountDAO accountDAO;
     private UsersDAO usersDAO;
+    private AuthoritiesService authoritiesService;
+    private AuthoritiesDAO authoritiesDAO;
 
-    public AccountsServiceImpl(AccountDAO accountDAO, EntityManager entityManager, UsersDAO theusersDAO,UsersService theusersService) {
+    public AccountsServiceImpl(AuthoritiesDAO authoritiesDAO, AuthoritiesService theauthoritiesService, AccountDAO accountDAO, EntityManager entityManager, UsersDAO theusersDAO,UsersService theusersService) {
         this.accountDAO = accountDAO;
         this.theeEntityManager = entityManager;
         this.usersDAO = theusersDAO;
         this.usersService = theusersService;
+        this.authoritiesService = theauthoritiesService;
+        this.authoritiesDAO = authoritiesDAO;
     }
 
     @Override
@@ -63,8 +69,12 @@ public class AccountsServiceImpl implements AccountsService{
         accounts foundacc = account.get();
         Users user = new Users();
         user = usersService.findUsersByFirstName(foundacc.getFirstName());
+        Authorities authorities = new Authorities();
+        authorities = authoritiesService.findUsersByFirstName(foundacc.getFirstName());
+        authoritiesDAO.delete(authorities);
         usersDAO.delete(user);
-        accountDAO.delete(foundacc);   
+        accountDAO.delete(foundacc);
+           
     }
 
     @Override
