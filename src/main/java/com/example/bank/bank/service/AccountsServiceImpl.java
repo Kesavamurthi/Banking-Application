@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.bank.bank.DAO.AccountDAO;
+import com.example.bank.bank.DAO.UsersDAO;
+import com.example.bank.bank.entity.Users;
 import com.example.bank.bank.entity.accounts;
 
 import jakarta.persistence.EntityManager;
@@ -19,11 +21,16 @@ public class AccountsServiceImpl implements AccountsService{
     static double balance;
     static long accnum;
     static long accountNumber = 202400;
+    
+    private UsersService usersService;
     private AccountDAO accountDAO;
+    private UsersDAO usersDAO;
 
-    public AccountsServiceImpl(AccountDAO accountDAO, EntityManager entityManager) {
+    public AccountsServiceImpl(AccountDAO accountDAO, EntityManager entityManager, UsersDAO theusersDAO,UsersService theusersService) {
         this.accountDAO = accountDAO;
         this.theeEntityManager = entityManager;
+        this.usersDAO = theusersDAO;
+        this.usersService = theusersService;
     }
 
     @Override
@@ -54,6 +61,9 @@ public class AccountsServiceImpl implements AccountsService{
     public void deleteAccount(int id) {
         Optional<accounts> account = accountDAO.findById(id); 
         accounts foundacc = account.get();
+        Users user = new Users();
+        user = usersService.findUsersByFirstName(foundacc.getFirstName());
+        usersDAO.delete(user);
         accountDAO.delete(foundacc);   
     }
 
