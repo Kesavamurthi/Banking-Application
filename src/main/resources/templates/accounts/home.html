@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,19 +9,37 @@
 </head>
 <body>
     <div class="p-3 mb-2 bg-primary-subtle text-primary-emphasis">
-        <h3>Welcome to the Bank</h3>
+        <h3>Hyper Bank of India</h3>
         <hr>
+        <p>
+            <h6>Welcome Back <span th:text="${account.firstName}"></span> !</h6>
+            <br>
+            Account Number: <span th:text="${account.accountNumber}"></span>
+            <br>
+            Balance: <span th:text="${account.balance}"></span>
+            <br>
+            Account Type: <span th:text="${account.accountType}"></span>
+            <br>
+        </p>
         <table class="table table-primary table-borderless">
-            <tr>
-                <td>
-                    <a th:href="@{/login/}" class="btn btn-info">Individual Login</a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a th:href="@{/login/}" class="btn btn-info">Corporate Login</a>
-                </td>
-            </tr>
             
-    </div>
+            <tr>
+                <td>
+                    <a th:href="@{/transactions/showformwithdrawal(accountNumber=${account.accountNumber})}" class="btn btn-info">Withdraw</a>
+                </td> 
+            </tr>
+            <tr>
+                <td>
+                    <a th:href="@{/transactions/showformdeposit(accountNumber=${account.accountNumber})}" class="btn btn-info">Deposit</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="#" th:action="@{/logout}" method="POST">
+                        <input type="submit" value="Logout" class="btn btn-danger">
+                    </form>                </td>
+            </tr>
+        </table>
+    
+</div>
 </body>

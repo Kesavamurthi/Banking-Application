@@ -71,4 +71,11 @@ public class AccountsServiceImpl implements AccountsService{
         return acc.isEmpty() ? null : acc.get(0);
     }
 
+    @Override
+    public accounts findAccountByUsername(String username) {
+        TypedQuery<accounts> thequery = theeEntityManager.createQuery("from accounts WHERE firstName=:thedata",accounts.class);
+        thequery.setParameter("thedata", username);
+        return thequery.getSingleResult();
+    }
+
 }

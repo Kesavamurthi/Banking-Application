@@ -3,6 +3,7 @@ package com.example.bank.bank.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-@RequestMapping("/home")
 public class BankController {
 
     static double balance;
@@ -34,7 +34,10 @@ public class BankController {
     }
 
     @GetMapping("/")
-    public String showHomePage(){
+    public String showHomePage(Model model){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        accounts account = accountsService.findAccountByUsername(username);
+        model.addAttribute("account", account);
         return "accounts/home";
     }
     
@@ -81,13 +84,13 @@ public class BankController {
             account.setAccountNumber(accnum);
         }
         accountsService.save(account);
-        return "redirect:/accounts/list";
+        return "redirect:/list";
     }
 
     @GetMapping("/deleteaccount{accountId}")
     public String deleteAcc(@RequestParam int accountId){
         accountsService.deleteAccount(accountId);
-        return "redirect:/accounts/list";
+        return "redirect:/list";
     }
     
 }

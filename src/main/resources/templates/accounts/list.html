@@ -10,7 +10,7 @@
     <div class="p-3 mb-2 bg-primary-subtle text-primary-emphasis">
     <h3>Account List</h3>
     <hr>
-    <a th:href="@{/accounts/showform}" class="btn btn-info">Add Account</a>
+    <a th:href="@{/showform}" class="btn btn-info">Add Account</a>
     <br>
     <br>
     <table class="table table-striped">
@@ -36,8 +36,8 @@
                 <td th:text="${tempAccount.balance}"></td>
                 <td th:text="${tempAccount.accountType}"></td>
                 <td>
-                    <a th:href="@{/accounts/showformforupdate(accountId=${tempAccount.id})}" class="btn btn-info">Update</a>
-                    <a th:href="@{/accounts/deleteaccount(accountId=${tempAccount.id})}" th:onclick="if(!(confirm('are you sure'))) return false" class="btn btn-danger">Delete</a>
+                    <a th:href="@{/showformforupdate(accountId=${tempAccount.id})}" class="btn btn-info">Update</a>
+                    <a th:href="@{/deleteaccount(accountId=${tempAccount.id})}" th:onclick="if(!(confirm('are you sure'))) return false" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         </tbody>

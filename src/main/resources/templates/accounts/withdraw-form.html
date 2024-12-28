@@ -11,10 +11,10 @@
         <h3>Withdrawal</h3>
         <hr>
             <form action="#" th:action="@{/transactions/withdraw}" th:object="${withdraw}" method="POST">
-                <input type="text" th:field="*{accountNumber}" class="form-control mb-4 w-25" placeholder="Account Number"/>
+                <input type="hidden" th:field="*{accountNumber}" />
                 <input type="text" th:field="*{amount}" class="form-control mb-4 w-25" placeholder="amount"/>        
                 <button type="submit" class="btn btn-primary">Withdraw</button>
-                <a th:href="@{/transactions/}" class="btn btn-danger">Back</a>
+                <a th:href="@{/}" class="btn btn-danger">Back</a>
             </form>
     </div>
     <br>

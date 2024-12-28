@@ -12,5 +12,6 @@ public interface AccountsService {
     accounts findById(int id);
     void deleteAccount(int id);
     accounts findAccountByAccountNumber(long accountNum);
+    accounts findAccountByUsername(String username);
     accounts findLastAccountNumber();
 }

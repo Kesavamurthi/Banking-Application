@@ -33,17 +33,20 @@ public class TransactionsController {
     }
     
 
-    @GetMapping("/showformwithdrawal")
-    public String withdrawMoney(Model model) {
+    @GetMapping("/showformwithdrawal{accountNumber}")
+    public String withdrawMoney(@RequestParam long accountNumber,Model model) {
+        System.out.println("accnumber" + accountNumber);
         Withdraw withdraw = new Withdraw();
+        withdraw.setAccountNumber(accountNumber);
         model.addAttribute("withdraw", withdraw);
         return "accounts/withdraw-form";
     }
 
-    @GetMapping("/showformdeposit")
-    public String deppositMoney(Model model) {
-        Deposit withdraw = new Deposit();
-        model.addAttribute("deposit", withdraw);
+    @GetMapping("/showformdeposit{accountNumber}")
+    public String deppositMoney(@RequestParam long accountNumber,Model model) {
+        Deposit deposit = new Deposit();
+        deposit.setAccountNumber(accountNumber);
+        model.addAttribute("deposit", deposit);
         return "accounts/deposit-form";
     }
 

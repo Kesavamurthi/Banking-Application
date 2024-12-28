@@ -1,12 +1,13 @@
 package com.example.bank.bank.model;
 
 public class Withdraw {
-    int accountNumber;
+    long accountNumber;
     int amount;
-    public int getAccountNumber() {
+    
+    public long getAccountNumber() {
         return accountNumber;
     }
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(long accountNumber) {
         this.accountNumber = accountNumber;
     }
     public int getAmount() {
